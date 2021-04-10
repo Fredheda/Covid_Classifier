@@ -27,7 +27,19 @@ training_iterator = training_data_generator.flow_from_directory(DIRECTORY_train,
 training_iterator.next()
 
 #Create Validation Data
-
-
 validation_data_generator = ImageDataGenerator()
 validation_iterator = validation_data_generator.flow_from_directory(DIRECTORY_test,class_mode=CLASS_MODE,color_mode=COLOR_MODE,batch_size=BATCH_SIZE)
+
+#Create Model
+model = Sequential(name = "Covid")
+#Input Layer
+model.add(layers.Input(shape=(256,256,1)))
+#Add Hidden Layers
+model.add(layers.Conv2D(5,5, strides = 2, activation = 'relu'))
+model.add(layers.MaxPooling2D(pool_size = (2,2), strides = (2,2)))
+model.add(layers.Conv2D(3,3, strides = 1, activation = 'relu'))
+
+#Flatten Image:
+model.add(layers.Flatten())
+#Output Layer
+model.add(layers.Dense(3,activation = 'softmax'))

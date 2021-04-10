@@ -43,3 +43,14 @@ model.add(layers.Conv2D(3,3, strides = 1, activation = 'relu'))
 model.add(layers.Flatten())
 #Output Layer
 model.add(layers.Dense(3,activation = 'softmax'))
+
+#Define Hyperparameters
+optimizer = tf.keras.optimizers.Adam(learning_rate = 0.01)
+loss_function = tf.keras.losses.CategoricalCrossentropy()
+metrics_function=[tf.keras.metrics.CategoricalAccuracy(),tf.keras.metrics.AUC()]
+
+#Compile Model
+model.compile(optimizer = optimizer, loss = loss_function, metrics = metrics_function)
+
+#Print Model Summary
+#print(model.summary())

@@ -19,7 +19,7 @@ DIRECTORY_predict = "Covid_Data/Covid19-dataset/Predict"
 CLASS_MODE = "categorical"
 COLOR_MODE = "grayscale"
 TARGET_SIZE = (256,256)
-BATCH_SIZE = 1
+BATCH_SIZE = 16
 
 #Creating Training Data
 training_data_generator = ImageDataGenerator(1.0/255, zoom_range = 0.05, rotation_range = 20, width_shift_range = 0.02, height_shift_range = 0.02)
@@ -34,7 +34,7 @@ validation_iterator = validation_data_generator.flow_from_directory(DIRECTORY_te
 
 #Create Prediction Data
 prediction_data_generator = ImageDataGenerator(rescale = 1./255)
-prediction_iterator = validation_data_generator.flow_from_directory(DIRECTORY_predict,class_mode=CLASS_MODE,color_mode=COLOR_MODE,batch_size=BATCH_SIZE)
+prediction_iterator = validation_data_generator.flow_from_directory(DIRECTORY_predict,class_mode=CLASS_MODE,color_mode=COLOR_MODE,batch_size=1)
 prediction_iterator.next()
 
 #Create Model
@@ -66,4 +66,15 @@ model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_S
 
 predictions = model.predict(prediction_iterator, verbose = 1)
 predicted_classes = np.argmax(predictions, axis=1)
-print(predicted_classes)
+
+class_labels = ["Covid-19", "Viral Pneumonia", "Healthy Patient"]
+class_labels_list = []
+for i in range(len(predicted_classes)):
+    if predicted_classes[i] == 0:
+        class_labels_list.append(class_labels[0])
+    elif predicted_classes[i] == 1:
+        class_labels_list.append(class_labels[1])
+    else:
+        class_labels_list.append(class_labels[2])
+
+print(class_labels_list)

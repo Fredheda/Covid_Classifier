@@ -10,14 +10,16 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import layers
 import matplotlib.pyplot as plt
 import cv2
+import numpy as np
 
 #Assign Directories
 DIRECTORY_train = "Covid_Data/Covid19-dataset/train"
 DIRECTORY_test = "Covid_Data/Covid19-dataset/test"
+DIRECTORY_predict = "Covid_Data/Covid19-dataset/Predict"
 CLASS_MODE = "categorical"
 COLOR_MODE = "grayscale"
 TARGET_SIZE = (256,256)
-BATCH_SIZE = 32
+BATCH_SIZE = 1
 
 #Creating Training Data
 training_data_generator = ImageDataGenerator(1.0/255, zoom_range = 0.05, rotation_range = 20, width_shift_range = 0.02, height_shift_range = 0.02)
@@ -29,6 +31,11 @@ training_iterator.next()
 #Create Validation Data
 validation_data_generator = ImageDataGenerator()
 validation_iterator = validation_data_generator.flow_from_directory(DIRECTORY_test,class_mode=CLASS_MODE,color_mode=COLOR_MODE,batch_size=BATCH_SIZE)
+
+#Create Prediction Data
+prediction_data_generator = ImageDataGenerator(rescale = 1./255)
+prediction_iterator = validation_data_generator.flow_from_directory(DIRECTORY_predict,class_mode=CLASS_MODE,color_mode=COLOR_MODE,batch_size=BATCH_SIZE)
+prediction_iterator.next()
 
 #Create Model
 model = Sequential(name = "Covid")
@@ -56,3 +63,7 @@ model.compile(optimizer = optimizer, loss = loss_function, metrics = metrics_fun
 #print(model.summary())
 
 model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_SIZE, epochs = 10, validation_data = validation_iterator, validation_steps = validation_iterator.samples/BATCH_SIZE)
+
+predictions = model.predict(prediction_iterator, verbose = 1)
+predicted_classes = np.argmax(predictions, axis=1)
+print(predicted_classes)

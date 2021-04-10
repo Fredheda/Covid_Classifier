@@ -45,7 +45,7 @@ model.add(layers.Flatten())
 model.add(layers.Dense(3,activation = 'softmax'))
 
 #Define Hyperparameters
-optimizer = tf.keras.optimizers.Adam(learning_rate = 0.01)
+optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
 loss_function = tf.keras.losses.CategoricalCrossentropy()
 metrics_function=[tf.keras.metrics.CategoricalAccuracy(),tf.keras.metrics.AUC()]
 
@@ -54,3 +54,5 @@ model.compile(optimizer = optimizer, loss = loss_function, metrics = metrics_fun
 
 #Print Model Summary
 #print(model.summary())
+
+model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_SIZE, epochs = 10, validation_data = validation_iterator, validation_steps = validation_iterator.samples/BATCH_SIZE)

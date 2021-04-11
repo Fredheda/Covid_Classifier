@@ -71,7 +71,7 @@ model.compile(optimizer = optimizer, loss = loss_function, metrics = metrics_fun
 #Print Model Summary
 #print(model.summary())
 
-model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_SIZE, epochs = 25, validation_data = validation_iterator, validation_steps = validation_iterator.samples/BATCH_SIZE)
+model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_SIZE, epochs = 30, validation_data = validation_iterator, validation_steps = validation_iterator.samples/BATCH_SIZE)
 
 predictions = model.predict(prediction_iterator, verbose = 1)
 predicted_classes = np.argmax(predictions, axis=1)

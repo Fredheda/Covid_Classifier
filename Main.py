@@ -60,7 +60,7 @@ model.add(layers.Dense(5,activation="relu"))
 model.add(layers.Dense(3,activation = 'softmax'))
 
 #Define Hyperparameters
-optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
+optimizer = tf.keras.optimizers.Adam(learning_rate = 0.005)
 loss_function = tf.keras.losses.CategoricalCrossentropy()
 metrics_function=[tf.keras.metrics.CategoricalAccuracy(),tf.keras.metrics.AUC()]
 

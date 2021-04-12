@@ -1,6 +1,11 @@
 # COVID-19 Classifier CNN
 
-Classification of Lung X-Ray images into COVID-19, Viral Pneumonia and Healthy Lung.
+This Repository comprises a deep learning (DL) classifier for X-Ray images. The classifier is based using a deep Convolutional Neural Network (CNN). The CNN is constructed using Tensorflow and Keras.
 
-Dataset required:
+The DL model can be used to classify lung X-Ray images into three categories:
+- COVID-19
+- Viral Pneumonia
+- Healthy Lung
+
+The dataset that was used for training of the classifier can be accessed using the link below:
 https://www.kaggle.com/pranavraikokte/covid19-image-dataset

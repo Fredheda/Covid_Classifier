@@ -13,6 +13,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 #Assign Directories
@@ -22,7 +23,7 @@ DIRECTORY_predict = "Covid_Data/Covid19-dataset/Predict"
 CLASS_MODE = "categorical"
 COLOR_MODE = "grayscale"
 TARGET_SIZE = (256,256)
-BATCH_SIZE = 16
+BATCH_SIZE = 25
 
 #Creating Training Data
 training_data_generator = ImageDataGenerator(rescale=1.0/255, zoom_range = 0.25, rotation_range = 20, width_shift_range = 0.05, height_shift_range = 0.05)
@@ -69,8 +70,10 @@ model.compile(optimizer = optimizer, loss = loss_function, metrics = metrics_fun
 
 #Print Model Summary
 #print(model.summary())
+#Create Early Stopping element
+stop = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=10)
 
-model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_SIZE, epochs = 30, validation_data = validation_iterator, validation_steps = validation_iterator.samples/BATCH_SIZE)
+model.fit(training_iterator, steps_per_epoch = training_iterator.samples/BATCH_SIZE, epochs = 60, validation_data = validation_iterator, validation_steps = validation_iterator.samples/BATCH_SIZE,callbacks=[stop])
 
 predictions = model.predict(prediction_iterator, verbose = 1)
 predicted_classes = np.argmax(predictions, axis=1)

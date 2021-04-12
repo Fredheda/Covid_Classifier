@@ -1,6 +1,6 @@
 #Covid-19 vs Viral Pneumonia vs Health Lung classifier for X-Ray images
 #By Frederik Heda
-#12/04/2021
+#04/2021
 
 #import libraries
 import tensorflow as tf

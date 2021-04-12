@@ -1,6 +1,6 @@
 #Covid-19 vs Viral Pneumonia vs Health Lung classifier for X-Ray images
 #By Frederik Heda
-#09/04/2021
+#12/04/2021
 
 #import libraries
 import tensorflow as tf
@@ -14,7 +14,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-#from tensorflow.python.keras.layers.core import Activation
 
 #Assign Directories
 DIRECTORY_train = "Covid_Data/Covid19-dataset/train"
